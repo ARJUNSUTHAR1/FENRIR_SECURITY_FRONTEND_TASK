@@ -31,7 +31,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           </div>
         </div>
 
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
           {children}
         </main>
       </div>

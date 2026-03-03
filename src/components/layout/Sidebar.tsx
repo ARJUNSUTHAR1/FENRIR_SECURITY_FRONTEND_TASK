@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { clsx } from "clsx";
 import {
   LayoutDashboard,
@@ -11,7 +12,8 @@ import {
   Bell,
   Settings,
   HelpCircle,
-  ChevronRight,
+  ChevronUp,
+  LogOut,
   X,
 } from "lucide-react";
 
@@ -35,9 +37,13 @@ interface SidebarProps {
 
 export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [profileOpen, setProfileOpen] = useState(false);
 
   const NavLink = ({ href, label, icon: Icon }: { href: string; label: string; icon: React.ElementType }) => {
-    const active = pathname === href || (href === "/dashboard" && pathname.startsWith("/scan"));
+    const active =
+      pathname === href ||
+      (href === "/scan" && pathname.startsWith("/scan"));
     return (
       <Link
         href={href}
@@ -71,7 +77,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         )}
       >
         <div className="">
-        <div className="flex items-center justify-start px-5 py-5 shrink-0">
+        <div className="flex items-center justify-between px-5 py-5 shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-full bg-teal flex items-center justify-center">
               <div className="w-2.5 h-2.5 rounded-full bg-white/80" />
@@ -80,7 +86,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           </div>
           <button
             onClick={onClose}
-            className="lg:hidden text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            className="lg:hidden w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -101,17 +107,34 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         </div>
         </div>
 
-        <div className="px-4 py-4 border-t border-gray-200 dark:border-white/[0.06] shrink-0">
-          <div className="flex items-center gap-2.5">
+        <div className="border-t border-gray-200 dark:border-white/[0.06] shrink-0">
+          {profileOpen && (
+            <div className="px-3 py-2">
+              <button
+                onClick={() => { setProfileOpen(false); router.push("/login"); }}
+                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-normal text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
+              >
+                <LogOut size={16} strokeWidth={1.8} />
+                <span>Log out</span>
+              </button>
+            </div>
+          )}
+          <button
+            onClick={() => setProfileOpen((v) => !v)}
+            className="w-full flex items-center gap-2.5 px-4 py-4 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors cursor-pointer"
+          >
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
               A
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 text-left">
               <p className="text-xs font-medium text-gray-900 dark:text-white truncate">admin@edu.com</p>
               <p className="text-[11px] font-normal text-gray-500 dark:text-gray-400">Security Lead</p>
             </div>
-            <ChevronRight size={14} className="text-gray-400 shrink-0" />
-          </div>
+            <ChevronUp
+              size={14}
+              className={clsx("text-gray-400 shrink-0 transition-transform duration-200", profileOpen ? "rotate-0" : "rotate-180")}
+            />
+          </button>
         </div>
       </aside>
     </>

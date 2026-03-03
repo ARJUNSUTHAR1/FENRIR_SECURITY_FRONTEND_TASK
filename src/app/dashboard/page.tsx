@@ -85,46 +85,25 @@ export default function DashboardPage() {
 
   return (
     <AppLayout>
-      <div className="min-h-full">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616]">
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-gray-400 dark:text-gray-500">Scan</span>
-            <span className="text-gray-300 dark:text-gray-600">/</span>
-            <button className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
-              Home
-            </button>
-            <span className="text-gray-300 dark:text-gray-600">/</span>
-            <button className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
-              Private Assets
-            </button>
-            <span className="text-gray-300 dark:text-gray-600">/</span>
-            <span className="text-teal font-medium">New Scan</span>
+      <div className="h-full flex flex-col bg-white dark:bg-[#161616]">
+        <div className="flex-shrink-0 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 border-b border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616]">
+          <div className="flex items-center gap-1.5 text-xs overflow-hidden shrink min-w-0">
+            <span className="text-gray-400 dark:text-gray-500 whitespace-nowrap hidden sm:block">Scan /</span>
+            <span className="text-teal font-medium whitespace-nowrap">Dashboard</span>
           </div>
-
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              icon={<Download size={14} />}
-              onClick={() => addToast("Exporting report…", "info")}
-            >
+          <div className="flex items-center gap-2 shrink-0">
+            <Button variant="outline" size="sm" icon={<Download size={14} />} onClick={() => addToast("Exporting report…", "info")} className="hidden sm:flex">
               Export Report
             </Button>
-            <Button
-              variant="danger"
-              size="sm"
-              icon={<StopCircle size={14} />}
-              onClick={() => addToast("All active scans have been stopped.", "warning")}
-            >
+            <Button variant="danger" size="sm" icon={<StopCircle size={14} />} onClick={() => addToast("All active scans have been stopped.", "warning")} className="hidden sm:flex">
               Stop Scan
             </Button>
-
             <ThemeToggle />
           </div>
         </div>
 
-        <div className="px-6 py-4 border-b border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616]">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+        <div className="flex-shrink-0 px-4 sm:px-6 py-2.5 sm:py-3.5 border-b border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616] overflow-x-auto">
+          <div className="flex items-center gap-x-4 sm:gap-x-6 text-xs whitespace-nowrap">
             <StatItem label="Org" value={dashboardStats.org} />
             <Divider />
             <StatItem label="Owner" value={dashboardStats.owner} />
@@ -135,39 +114,36 @@ export default function DashboardPage() {
             <Divider />
             <StatItem label="Rescans" value={String(dashboardStats.rescans)} />
             <Divider />
-            <StatItem label="Failed Scans" value={String(dashboardStats.failedScans)} />
-            <div className="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 ml-auto">
-              <RefreshCw size={13} />
-              <span className="text-xs">{dashboardStats.lastUpdated}</span>
+            <StatItem label="Failed" value={String(dashboardStats.failedScans)} />
+            <div className="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 ml-6">
+              <RefreshCw size={12} />
+              <span>{dashboardStats.lastUpdated}</span>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-gray-200 dark:divide-white/[0.06] border-b border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616]">
+        <div className="flex-shrink-0 grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-gray-200 dark:divide-white/[0.06] border-b border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616]">
           {(["critical", "high", "medium", "low"] as const).map((level) => {
             const stat = severityStats[level];
             const Icon = severityIcons[level];
             return (
-              <div key={level} className="px-6 py-5">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400 capitalize">
-                    {level} Severity
+              <div key={level} className="px-3 sm:px-5 lg:px-6 py-3 sm:py-5">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <span className="text-[11px] sm:text-sm font-medium text-gray-500 dark:text-gray-400 capitalize">
+                    {level} <span className="hidden sm:inline">Severity</span>
                   </span>
-                  <div className={clsx("p-1.5 rounded-lg bg-gray-100 dark:bg-white/5", severityColors[level])}>
-                    <Icon  size={16} />
+                  <div className={clsx("p-1 rounded-lg bg-gray-100 dark:bg-white/5", severityColors[level])}>
+                    <Icon size={13} />
                   </div>
                 </div>
-                <div className="flex items-end gap-2.5">
-                  <span className="text-3xl font-normal tracking-tight text-gray-900 dark:text-white leading-none">
+                <div className="flex items-end gap-2">
+                  <span className="text-xl sm:text-3xl font-normal tracking-tight text-gray-900 dark:text-white leading-none">
                     {stat.count}
                   </span>
-                  <div
-                    className={`flex items-center gap-0.5 text-xs font-medium pb-0.5 ${
-                      stat.direction === "up" ? "text-red-400" : "text-green-400"
-                    }`}
-                  >
-                    {stat.direction === "up" ? <ArrowUp size={12} /> : <ArrowDown size={12} />}
-                    <span>+{stat.change}% increase than yesterday</span>
+                  <div className={`flex items-center gap-0.5 text-[10px] sm:text-xs font-medium pb-0.5 ${stat.direction === "up" ? "text-red-400" : "text-green-400"}`}>
+                    {stat.direction === "up" ? <ArrowUp size={10} /> : <ArrowDown size={10} />}
+                    <span className="sm:hidden">+{stat.change}%</span>
+                    <span className="hidden sm:inline">+{stat.change}% than yesterday</span>
                   </div>
                 </div>
               </div>
@@ -175,53 +151,29 @@ export default function DashboardPage() {
           })}
         </div>
 
-        <div className="px-6 pt-5 pb-4 bg-[#F5F5F5] dark:bg-[#111111]">
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="relative flex-1 min-w-[200px]">
-              <Search
-                size={15}
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
-              />
+        <div className="flex-shrink-0 px-4 sm:px-6 pt-3 sm:pt-4 pb-2 sm:pb-3 bg-[#F5F5F5] dark:bg-[#111111]">
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1 min-w-0">
+              <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search scans by name or type..."
+                placeholder="Search scans..."
                 value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setPage(1);
-                }}
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1A1A1A] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none focus:border-teal transition-colors"
+                onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                className="w-full pl-8 pr-3 py-2 rounded-xl text-xs border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1A1A1A] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none focus:border-teal transition-colors"
               />
             </div>
-
-            <Button
-              variant="outline"
-              size="sm"
-              icon={<Filter size={14} />}
-              onClick={() => setShowFilters((v) => !v)}
-            >
+            <Button variant="outline" size="sm" icon={<Filter size={13} />} onClick={() => setShowFilters((v) => !v)} className="shrink-0 text-xs">
               Filter
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              icon={<Columns size={14} />}
-              onClick={() => addToast("Column customization coming soon.", "info")}
-            >
-              Column
-            </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              icon={<Plus size={14} />}
-              onClick={() => setShowNewScanModal(true)}
-            >
-              New scan
+            <Button variant="primary" size="sm" icon={<Plus size={13} />} onClick={() => setShowNewScanModal(true)} className="shrink-0 text-xs">
+              <span className="hidden sm:inline">New scan</span>
+              <span className="sm:hidden">New</span>
             </Button>
           </div>
 
           {showFilters && (
-            <div className="mt-3 flex flex-wrap items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1A1A1A]">
+            <div className="mt-2 sm:mt-3 flex flex-wrap items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1A1A1A]">
               <div className="flex items-center gap-2">
                 <label className="text-xs font-medium text-gray-500 dark:text-gray-400">Status</label>
                 <select
@@ -270,28 +222,28 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <div className="px-6 pb-6 bg-[#F5F5F5] dark:bg-[#111111]">
-          <div className="rounded-xl border border-gray-200 dark:border-white/[0.06] overflow-hidden bg-white dark:bg-[#161616]">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
+        <div className="flex-1 min-h-0 flex flex-col px-4 sm:px-6 pb-4 sm:pb-6 bg-[#F5F5F5] dark:bg-[#111111] pt-1">
+          <div className="flex-1 min-h-0 rounded-xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616] flex flex-col overflow-hidden">
+            <div className="flex-1 min-h-0 overflow-y-auto overflow-x-auto">
+              <table className="w-full text-xs sm:text-sm">
+                <thead className="sticky top-0 bg-white dark:bg-[#161616] z-10">
                   <tr className="border-b border-gray-100 dark:border-white/[0.06]">
-                    <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide whitespace-nowrap">
+                    <th className="text-left px-3 sm:px-5 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide whitespace-nowrap">
                       Scan Name
                     </th>
-                    <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide whitespace-nowrap">
+                    <th className="text-left px-2 sm:px-4 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide whitespace-nowrap">
                       Type
                     </th>
-                    <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    <th className="text-left px-2 sm:px-4 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                       Status
                     </th>
-                    <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    <th className="text-left px-2 sm:px-4 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                       Progress
                     </th>
-                    <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    <th className="text-left px-2 sm:px-4 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                       Vulnerability
                     </th>
-                    <th className="text-right px-5 py-3.5 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide whitespace-nowrap">
+                    <th className="text-right px-3 sm:px-5 py-2.5 sm:py-3.5 text-[10px] sm:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide whitespace-nowrap">
                       Last Scan
                     </th>
                   </tr>
@@ -310,22 +262,22 @@ export default function DashboardPage() {
                         onClick={() => router.push(`/scan/${scan.id}`)}
                         className="hover:bg-gray-50 dark:hover:bg-white/[0.02] cursor-pointer transition-colors group"
                       >
-                        <td className="px-5 py-3.5">
-                          <span className="font-medium text-gray-800 dark:text-gray-200 group-hover:text-teal transition-colors">
+                        <td className="px-3 sm:px-5 py-2.5 sm:py-3.5">
+                          <span className="font-medium text-gray-800 dark:text-gray-200 group-hover:text-teal transition-colors text-xs sm:text-sm">
                             {scan.name}
                           </span>
                         </td>
-                        <td className="px-4 py-3.5 text-gray-500 dark:text-gray-400">
+                        <td className="px-2 sm:px-4 py-2.5 sm:py-3.5 text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
                           {scan.type}
                         </td>
-                        <td className="px-4 py-3.5">
+                        <td className="px-2 sm:px-4 py-2.5 sm:py-3.5">
                           <StatusChip status={scan.status} />
                         </td>
-                        <td className="px-4 py-3.5 min-w-[160px]">
+                        <td className="px-2 sm:px-4 py-2.5 sm:py-3.5 min-w-[120px] sm:min-w-[160px]">
                           <ProgressBar progress={scan.progress} status={scan.status} />
                         </td>
-                        <td className="px-4 py-3.5">
-                          <div className="flex items-center gap-1">
+                        <td className="px-2 sm:px-4 py-2.5 sm:py-3.5">
+                          <div className="flex items-center gap-0.5 sm:gap-1 flex-wrap">
                             {scan.vulnerabilities.critical > 0 && (
                               <SeverityBadge severity="critical" count={scan.vulnerabilities.critical} />
                             )}
@@ -340,7 +292,7 @@ export default function DashboardPage() {
                             )}
                           </div>
                         </td>
-                        <td className="px-5 py-3.5 text-right text-gray-400 dark:text-gray-500 text-xs whitespace-nowrap">
+                        <td className="px-3 sm:px-5 py-2.5 sm:py-3.5 text-right text-gray-400 dark:text-gray-500 text-[10px] sm:text-xs whitespace-nowrap">
                           {scan.lastScan}
                         </td>
                       </tr>
@@ -350,8 +302,8 @@ export default function DashboardPage() {
               </table>
             </div>
 
-            <div className="flex items-center justify-between px-5 py-3.5 border-t border-gray-100 dark:border-white/[0.06]">
-              <span className="text-xs text-gray-400 dark:text-gray-500">
+            <div className="flex-shrink-0 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-3 sm:px-5 py-2.5 sm:py-3.5 border-t border-gray-100 dark:border-white/[0.06]">
+              <span className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500">
                 Showing {Math.min((page - 1) * PAGE_SIZE + 1, filtered.length)}–
                 {Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length} Scans
               </span>
@@ -359,16 +311,16 @@ export default function DashboardPage() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-lg border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
-                  <ChevronLeft size={14} />
+                  <ChevronLeft size={12} className="sm:w-3.5 sm:h-3.5" />
                 </button>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages || totalPages === 0}
-                  className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-lg border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
-                  <ChevronRight size={14} />
+                  <ChevronRight size={12} className="sm:w-3.5 sm:h-3.5" />
                 </button>
               </div>
             </div>
