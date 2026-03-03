@@ -29,6 +29,7 @@ export interface Scan {
 export interface LogEntry {
   time: string;
   message: string;
+  highlights?: { text: string; color: string }[];
 }
 
 export interface Finding {

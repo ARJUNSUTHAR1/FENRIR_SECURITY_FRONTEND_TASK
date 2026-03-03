@@ -71,7 +71,7 @@ export default function LoginPage() {
       </div>
 
       <div className="hidden lg:flex flex-col justify-center relative z-10">
-        <div className="space-y-8 max-w-[460px]">
+        <div className="space-y-8">
           <h1 className="text-4xl xl:text-5xl font-normal text-white leading-tight tracking-tight">
             Expert level Cybersecurity
             <br />
@@ -106,7 +106,7 @@ export default function LoginPage() {
       </div>
 
       <div className="flex flex-col justify-center items-center relative z-10">
-        <div className="w-full max-w-[420px] bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-8 py-9">
+        <div className="w-full max-w-[520px] bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-8 py-9">
           <div className="lg:hidden flex items-center gap-2 mb-5">
             <div className="w-6 h-6 rounded-full bg-teal flex items-center justify-center">
               <div className="w-2 h-2 rounded-full bg-white/80" />
@@ -114,7 +114,7 @@ export default function LoginPage() {
             <span className="text-sm font-bold text-gray-900 dark:text-white">aps</span>
           </div>
 
-          <h2 className="text-2xl font-light tracking-tight text-center text-gray-900 dark:text-white mb-1">Sign up</h2>
+          <h2 className="text-2xl font-normal tracking-tight text-center text-gray-900 dark:text-white mb-1">Sign up</h2>
           <p className="text-sm text-center text-gray-500 dark:text-gray-400 mb-6">
             Already have an account?{" "}
             <button

@@ -1,4 +1,4 @@
-import type { Scan,DashboardStats, SeverityStats } from "@/types";
+import type { Scan, Finding, LogEntry, DashboardStats, SeverityStats } from "@/types";
 
 export const dashboardStats: DashboardStats = {
   org: "Project X",
@@ -16,7 +16,6 @@ export const severityStats: SeverityStats = {
   medium: { count: 26, change: 0.9, direction: "down" },
   low: { count: 16, change: 0.9, direction: "up" },
 };
-
 
 export const scans: Scan[] = [
   {
@@ -243,5 +242,130 @@ export const scans: Scan[] = [
     files: "PCI-Checklist.pdf",
     checklists: "350/350",
     currentStep: "reporting",
+  },
+];
+
+export const activityLogs: LogEntry[] = [
+  {
+    time: "09:00:00",
+    message: "I'll begin a systematic penetration test on helpdesk.democorp.com. Let me start with reconnaissance and enumeration.",
+    highlights: [{ text: "helpdesk.democorp.com", color: "teal" }],
+  },
+  {
+    time: "09:01:00",
+    message: "Good! target is online. Now let me perform port scanning to identify running services.",
+    highlights: [],
+  },
+  {
+    time: "09:02:00",
+    message: "Excellent reconnaissance results:\n  - helpdesk.democorp.com: Apache httpd 2.4.65 on port 80 (web server)\nLet me probe the web server on target first to understand its structure.",
+    highlights: [{ text: "helpdesk.democorp.com: Apache httpd 2.4.65 on port 80 (web server)", color: "dim" }],
+  },
+  {
+    time: "09:03:00",
+    message: 'Great! I found a login page for a Help Desk Platform. I can see a useful comment: "TODO: Delete the testing account (test:test)". Let me test this credential. The login redirects to /password/test. Let me follow that path and explore it.',
+    highlights: [
+      { text: '"TODO: Delete the testing account (test:test)"', color: "teal" },
+      { text: "/password/test", color: "code" },
+    ],
+  },
+  {
+    time: "09:04:00",
+    message: "The POST method is not allowed on /password/test. Let me check what the JavaScript does — it posts to '#' which means the current page. Let me try a different approach.",
+    highlights: [{ text: "'#'", color: "code" }],
+  },
+  {
+    time: "09:05:00",
+    message: "It redirects back to /password/test. Let me check if there's an /api endpoint or look for other paths. Let me also try exploring with the test:test password directly on other endpoints.",
+    highlights: [{ text: "test:test", color: "teal" }],
+  },
+  {
+    time: "09:06:00",
+    message: "Great! I can access the dashboard using the 'X-UserId: 10032' header. The dashboard shows \"Welcome, John Doe\". This suggests an **IDOR vulnerability** — I can access any user's dashboard by just changing the X-UserId header. Let me explore more of the application...",
+    highlights: [
+      { text: "'X-UserId: 10032'", color: "code" },
+      { text: "**IDOR vulnerability**", color: "critical" },
+    ],
+  },
+  {
+    time: "09:08:00",
+    message: "Testing SQL injection vectors on the search endpoint. Submitting ' OR '1'='1 to /api/search — server responded with 500 Internal Server Error.",
+    highlights: [{ text: "/api/search", color: "teal" }],
+  },
+  {
+    time: "09:09:00",
+    message: "Confirmed time-based blind SQL injection on /api/users/profile. Response delay of 5.2s detected using SLEEP(5) payload.",
+    highlights: [{ text: "/api/users/profile", color: "teal" }],
+  },
+  {
+    time: "09:11:00",
+    message: "Checking rate limiting on /api/auth/login endpoint. Sending 200 rapid login attempts — no throttling detected. Brute force is possible.",
+    highlights: [{ text: "/api/auth/login", color: "teal" }],
+  },
+];
+
+export const verificationLogs: LogEntry[] = [
+  {
+    time: "10:15:00",
+    message: "Re-testing SQL injection on /api/users/profile — reproducing delay of 5.1s. Confirmed.",
+    highlights: [{ text: "/api/users/profile", color: "teal" }],
+  },
+  {
+    time: "10:22:00",
+    message: "Re-testing IDOR on dashboard endpoint with X-UserId: 99999 — confirmed access to another user account.",
+    highlights: [{ text: "X-UserId: 99999", color: "code" }],
+  },
+  {
+    time: "10:35:00",
+    message: "Rate-limit brute force re-test on /api/auth/login — 500 attempts sent, zero blocks. Confirmed.",
+    highlights: [{ text: "/api/auth/login", color: "teal" }],
+  },
+  {
+    time: "10:44:00",
+    message: "Unauthorized metadata endpoint /api/auth/me accessed using low-privilege token. Fields exposed: email, role, org_id, last_login.",
+    highlights: [{ text: "/api/auth/me", color: "teal" }],
+  },
+];
+
+export const findings: Finding[] = [
+  {
+    id: "f-001",
+    severity: "critical",
+    title: "SQL Injection in Authentication Endpoint",
+    endpoint: "/api/users/profile",
+    description: "Time-based blind SQL injection confirmed on user-controlled input during authentication flow. Exploitation allows database-level access.",
+    time: "10:45:23",
+  },
+  {
+    id: "f-002",
+    severity: "high",
+    title: "Unauthorized Access to User Metadata",
+    endpoint: "/api/auth/login",
+    description: "Authenticated low-privilege user was able to access metadata of other users. Access control checks were missing.",
+    time: "10:45:23",
+  },
+  {
+    id: "f-003",
+    severity: "medium",
+    title: "Broken Authentication Rate Limiting",
+    endpoint: "/api/search",
+    description: "No effective rate limiting detected on login attempts. Automated brute-force attempts possible.",
+    time: "10:45:23",
+  },
+  {
+    id: "f-004",
+    severity: "high",
+    title: "IDOR on User Dashboard Endpoint",
+    endpoint: "/api/dashboard",
+    description: "X-UserId header accepted without server-side validation. Any authenticated user can view any other user's dashboard.",
+    time: "10:46:10",
+  },
+  {
+    id: "f-005",
+    severity: "low",
+    title: "Verbose Server Banner Disclosure",
+    endpoint: "/",
+    description: "Apache httpd 2.4.65 version exposed in HTTP response headers. Attackers can target version-specific CVEs.",
+    time: "10:46:55",
   },
 ];
