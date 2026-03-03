@@ -28,6 +28,7 @@ import { useToast } from "@/hooks/useToast";
 import { scans, dashboardStats, severityStats } from "@/data/mock";
 import type { ScanStatus, ScanType } from "@/types";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import clsx from "clsx";
 
 
 const PAGE_SIZE = 10;
@@ -152,12 +153,12 @@ export default function DashboardPage() {
                   <span className="text-sm font-medium text-gray-500 dark:text-gray-400 capitalize">
                     {level} Severity
                   </span>
-                  <div className={`p-1.5 rounded-lg bg-gray-100 dark:bg-white/5 ${severityColors[level]}`}>
-                    <Icon size={16} />
+                  <div className={clsx("p-1.5 rounded-lg bg-gray-100 dark:bg-white/5", severityColors[level])}>
+                    <Icon  size={16} />
                   </div>
                 </div>
                 <div className="flex items-end gap-2.5">
-                  <span className="text-3xl font-light tracking-tight text-gray-900 dark:text-white leading-none">
+                  <span className="text-3xl font-normal tracking-tight text-gray-900 dark:text-white leading-none">
                     {stat.count}
                   </span>
                   <div
