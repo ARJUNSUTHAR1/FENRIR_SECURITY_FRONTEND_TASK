@@ -55,7 +55,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="h-screen max-w-[1600px] mx-auto flex bg-[#0F0F0F] relative overflow-hidden">
+    <div className="h-screen max-w-[1600px] mx-auto flex items-center justify-between px-16 bg-[#0F0F0F] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute inset-0 login-bg-gradient" />
         <div className="absolute rounded-full w-[1500px] h-[1450px] -bottom-[900px] -right-[650px] bg-[#D4A017] blur-[60px] opacity-90" />
@@ -70,23 +70,23 @@ export default function LoginPage() {
         <span className="text-base font-bold tracking-tight text-white">aps</span>
       </div>
 
-      <div className="hidden lg:flex flex-col justify-center w-[52%] px-16 relative z-10">
+      <div className="hidden lg:flex flex-col justify-center relative z-10">
         <div className="space-y-8 max-w-[460px]">
-          <h1 className="text-4xl xl:text-5xl font-bold text-white leading-tight">
+          <h1 className="text-4xl xl:text-5xl font-normal text-white leading-tight tracking-tight">
             Expert level Cybersecurity
             <br />
             in <span className="text-teal">hours</span> not weeks.
           </h1>
 
           <div className="space-y-3">
-            <p className="text-sm font-semibold text-gray-300 uppercase tracking-wider">What&apos;s included</p>
+            <p className="text-xl font-medium text-gray-200">What's included</p>
             <ul className="space-y-3">
               {features.map((f, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center shrink-0 mt-0.5">
                     <Check size={11} className="text-teal" strokeWidth={3} />
                   </div>
-                  <span className="text-sm text-gray-300 leading-relaxed">{f}</span>
+                  <span className="text-md font-normal text-gray-300 leading-relaxed">{f}</span>
                 </li>
               ))}
             </ul>
@@ -95,17 +95,17 @@ export default function LoginPage() {
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <Star size={14} className="text-green-400 fill-green-400" />
-              <span className="text-sm font-semibold text-white">Trustpilot</span>
+              <span className="text-sm font-normal text-white">Trustpilot</span>
             </div>
-            <p className="text-sm text-gray-300">
-              <span className="font-bold text-white">Rated 4.5/5.0</span>{" "}
+            <p className="text-xl font-normal text-gray-300">
+              <span className="font-normal text-white">Rated 4.5/5.0</span>{" "}
               <span className="text-gray-400">(100k+ reviews)</span>
             </p>
           </div>
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col justify-center items-center px-6 py-10 relative z-10">
+      <div className="flex flex-col justify-center items-center relative z-10">
         <div className="w-full max-w-[420px] bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-8 py-9">
           <div className="lg:hidden flex items-center gap-2 mb-5">
             <div className="w-6 h-6 rounded-full bg-teal flex items-center justify-center">
@@ -114,7 +114,7 @@ export default function LoginPage() {
             <span className="text-sm font-bold text-gray-900 dark:text-white">aps</span>
           </div>
 
-          <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-1">Sign up</h2>
+          <h2 className="text-2xl font-light tracking-tight text-center text-gray-900 dark:text-white mb-1">Sign up</h2>
           <p className="text-sm text-center text-gray-500 dark:text-gray-400 mb-6">
             Already have an account?{" "}
             <button
