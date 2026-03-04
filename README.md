@@ -21,6 +21,7 @@ User Interface
 - Icons: Lucide React
 - Theme Management: next-themes
 - Font: Outfit 
+- clsx
 
 ## Getting Started
 

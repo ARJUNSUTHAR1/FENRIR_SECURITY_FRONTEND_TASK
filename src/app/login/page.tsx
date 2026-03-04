@@ -14,7 +14,7 @@ const features = [
 ];
 
 const inputBase =
-  "w-full px-4 py-3 rounded-xl text-sm border bg-white dark:bg-[#111111] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-colors";
+  "w-full px-3 xl:px-4 py-2.5 xl:py-3 rounded-xl text-xs xl:text-sm border bg-white dark:bg-[#111111] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-colors";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -170,19 +170,19 @@ export default function LoginPage() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className={clsx("w-full max-w-[420px] lg:w-[420px] lg:max-w-[420px] flex-shrink-0 bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-6 sm:px-8", mode === "login" ? "py-6 sm:py-7" : "py-7 sm:py-9")}
+          className={clsx("w-full max-w-[420px] lg:w-[420px] lg:max-w-[420px] flex-shrink-0 bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-4 sm:px-6 xl:px-8", mode === "login" ? "py-5 sm:py-6 xl:py-7" : "py-6 sm:py-7 xl:py-9")}
         >
           {mode === "login" ? (
             <>
-              <h2 className="text-2xl font-normal tracking-tight text-center text-gray-900 dark:text-white mb-1">Log in</h2>
-              <p className="text-sm text-center text-gray-500 dark:text-gray-400 mb-5">
+              <h2 className="text-xl xl:text-2xl font-normal tracking-tight text-center text-gray-900 dark:text-white mb-1">Log in</h2>
+              <p className="text-xs xl:text-sm text-center text-gray-500 dark:text-gray-400 mb-5">
                 Don&apos;t have an account?{" "}
-                <button onClick={() => switchMode("signup")} className="text-teal hover:underline font-medium cursor-pointer">
+                <button onClick={() => switchMode("signup")} className="text-teal hover:underline font-medium cursor-pointer text-xs xl:text-sm">
                   Sign up
                 </button>
               </p>
 
-              <form onSubmit={handleLogin} className="space-y-3" noValidate>
+              <form onSubmit={handleLogin} className="space-y-2.5 xl:space-y-3" noValidate>
                 <div>
                   <input
                     name="email"
@@ -193,7 +193,7 @@ export default function LoginPage() {
                     autoFocus
                     className={clsx(inputBase, loginErrors.email ? "border-red-400" : "border-gray-200 dark:border-white/10 focus:border-teal")}
                   />
-                  {loginErrors.email && <p className="text-xs text-red-400 mt-1 px-1">{loginErrors.email}</p>}
+                  {loginErrors.email && <p className="text-[10px] xl:text-xs text-red-400 mt-1 px-1">{loginErrors.email}</p>}
                 </div>
 
                 <div>
@@ -204,19 +204,19 @@ export default function LoginPage() {
                       placeholder="Password"
                       value={loginForm.password}
                       onChange={handleLoginChange}
-                      className={clsx(inputBase, "pr-11", loginErrors.password ? "border-red-400" : "border-gray-200 dark:border-white/10 focus:border-teal")}
+                      className={clsx(inputBase, "pr-10 xl:pr-11", loginErrors.password ? "border-red-400" : "border-gray-200 dark:border-white/10 focus:border-teal")}
                     />
-                    <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer">
-                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-3 xl:right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer">
+                      {showPassword ? <EyeOff size={14} className="xl:w-4 xl:h-4" /> : <Eye size={14} className="xl:w-4 xl:h-4" />}
                     </button>
                   </div>
-                  {loginErrors.password && <p className="text-xs text-red-400 mt-1 px-1">{loginErrors.password}</p>}
+                  {loginErrors.password && <p className="text-[10px] xl:text-xs text-red-400 mt-1 px-1">{loginErrors.password}</p>}
                 </div>
 
                 <button
                   type="submit"
                   disabled={loginLoading}
-                  className="w-full py-3 rounded-xl bg-teal hover:bg-teal-hover text-white text-sm font-semibold transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-2.5 xl:py-3 rounded-xl bg-teal hover:bg-teal-hover text-white text-xs xl:text-sm font-semibold transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loginLoading ? (
                     <>
@@ -227,14 +227,14 @@ export default function LoginPage() {
                 </button>
               </form>
 
-              <div className="grid grid-cols-3 gap-3 mt-4">
+              <div className="grid grid-cols-3 gap-2 xl:gap-3 mt-4">
                 <SocialButton onClick={() => router.push("/dashboard")} className="bg-black hover:bg-gray-900 text-white" label="Apple">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="w-3.5 xl:w-4 h-3.5 xl:h-4 fill-current" aria-hidden="true">
                     <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701z" />
                   </svg>
                 </SocialButton>
                 <SocialButton onClick={() => router.push("/dashboard")} className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700" label="Google">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="w-3.5 xl:w-4 h-3.5 xl:h-4" aria-hidden="true">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
@@ -242,7 +242,7 @@ export default function LoginPage() {
                   </svg>
                 </SocialButton>
                 <SocialButton onClick={() => router.push("/dashboard")} className="bg-[#1877F2] hover:bg-[#166fe5] text-white" label="Meta">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="w-3.5 xl:w-4 h-3.5 xl:h-4 fill-current" aria-hidden="true">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
                 </SocialButton>
@@ -250,15 +250,15 @@ export default function LoginPage() {
             </>
           ) : (
             <>
-              <h2 className="text-2xl font-normal tracking-tight text-center text-gray-900 dark:text-white mb-1">Sign up</h2>
-              <p className="text-sm text-center text-gray-500 dark:text-gray-400 mb-6">
+              <h2 className="text-xl xl:text-2xl font-normal tracking-tight text-center text-gray-900 dark:text-white mb-1">Sign up</h2>
+              <p className="text-xs xl:text-sm text-center text-gray-500 dark:text-gray-400 mb-6">
                 Already have an account?{" "}
-                <button onClick={() => switchMode("login")} className="text-teal hover:underline font-medium cursor-pointer">
+                <button onClick={() => switchMode("login")} className="text-teal hover:underline font-medium cursor-pointer text-xs xl:text-sm">
                   Log in
                 </button>
               </p>
 
-              <form onSubmit={handleSignUp} className="space-y-3.5" noValidate>
+              <form onSubmit={handleSignUp} className="space-y-3 xl:space-y-3.5" noValidate>
                 <div>
                   <input
                     name="firstName"
@@ -268,7 +268,7 @@ export default function LoginPage() {
                     onChange={handleChange}
                     className={clsx(inputBase, errors.firstName ? "border-red-400" : "border-gray-200 dark:border-white/10 focus:border-teal")}
                   />
-                  {errors.firstName && <p className="text-xs text-red-400 mt-1 px-1">{errors.firstName}</p>}
+                  {errors.firstName && <p className="text-[10px] xl:text-xs text-red-400 mt-1 px-1">{errors.firstName}</p>}
                 </div>
 
                 <div>
@@ -280,7 +280,7 @@ export default function LoginPage() {
                     onChange={handleChange}
                     className={clsx(inputBase, errors.lastName ? "border-red-400" : "border-gray-200 dark:border-white/10 focus:border-teal")}
                   />
-                  {errors.lastName && <p className="text-xs text-red-400 mt-1 px-1">{errors.lastName}</p>}
+                  {errors.lastName && <p className="text-[10px] xl:text-xs text-red-400 mt-1 px-1">{errors.lastName}</p>}
                 </div>
 
                 <div>
@@ -292,7 +292,7 @@ export default function LoginPage() {
                     onChange={handleChange}
                     className={clsx(inputBase, errors.email ? "border-red-400" : "border-gray-200 dark:border-white/10 focus:border-teal")}
                   />
-                  {errors.email && <p className="text-xs text-red-400 mt-1 px-1">{errors.email}</p>}
+                  {errors.email && <p className="text-[10px] xl:text-xs text-red-400 mt-1 px-1">{errors.email}</p>}
                 </div>
 
                 <div>
@@ -303,13 +303,13 @@ export default function LoginPage() {
                       placeholder="Password (8+ characters)*"
                       value={form.password}
                       onChange={handleChange}
-                      className={clsx(inputBase, "pr-11", errors.password ? "border-red-400" : "border-gray-200 dark:border-white/10 focus:border-teal")}
+                      className={clsx(inputBase, "pr-10 xl:pr-11", errors.password ? "border-red-400" : "border-gray-200 dark:border-white/10 focus:border-teal")}
                     />
-                    <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer">
-                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-3 xl:right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer">
+                      {showPassword ? <EyeOff size={14} className="xl:w-4 xl:h-4" /> : <Eye size={14} className="xl:w-4 xl:h-4" />}
                     </button>
                   </div>
-                  {errors.password && <p className="text-xs text-red-400 mt-1 px-1">{errors.password}</p>}
+                  {errors.password && <p className="text-[10px] xl:text-xs text-red-400 mt-1 px-1">{errors.password}</p>}
                 </div>
 
                 <label className="flex items-start gap-3 cursor-pointer group pt-0.5">
@@ -324,19 +324,19 @@ export default function LoginPage() {
                       {agreed && <Check size={10} className="text-white" strokeWidth={3} />}
                     </div>
                   </div>
-                  <span className="text-xs text-gray-600 dark:text-gray-400 leading-snug">
+                  <span className="text-[10px] xl:text-xs text-gray-600 dark:text-gray-400 leading-snug">
                     I agree to Aps&apos;s{" "}
                     <span className="text-blue-500 underline cursor-pointer hover:text-blue-600">Terms &amp; Conditions</span>{" "}
                     and acknowledge the{" "}
                     <span className="text-blue-500 underline cursor-pointer hover:text-blue-600">Privacy Policy</span>
                   </span>
                 </label>
-                {errors.agreed && <p className="text-xs text-red-400 px-1">{errors.agreed}</p>}
+                {errors.agreed && <p className="text-[10px] xl:text-xs text-red-400 px-1">{errors.agreed}</p>}
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 rounded-xl bg-teal hover:bg-teal-hover text-white text-sm font-normal transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-2.5 xl:py-3 rounded-xl bg-teal hover:bg-teal-hover text-white text-xs xl:text-sm font-normal transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
@@ -347,14 +347,14 @@ export default function LoginPage() {
                 </button>
               </form>
 
-              <div className="grid grid-cols-3 gap-3 mt-5">
+              <div className="grid grid-cols-3 gap-2 xl:gap-3 mt-5">
                 <SocialButton onClick={() => router.push("/dashboard")} className="bg-black hover:bg-gray-900 text-white" label="Apple">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="w-3.5 xl:w-4 h-3.5 xl:h-4 fill-current" aria-hidden="true">
                     <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701z" />
                   </svg>
                 </SocialButton>
                 <SocialButton onClick={() => router.push("/dashboard")} className="bg-white hover:bg-gray-50 border border-gray-200 text-gray-700" label="Google">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="w-3.5 xl:w-4 h-3.5 xl:h-4" aria-hidden="true">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
@@ -362,7 +362,7 @@ export default function LoginPage() {
                   </svg>
                 </SocialButton>
                 <SocialButton onClick={() => router.push("/dashboard")} className="bg-[#1877F2] hover:bg-[#166fe5] text-white" label="Meta">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="w-3.5 xl:w-4 h-3.5 xl:h-4 fill-current" aria-hidden="true">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
                 </SocialButton>
@@ -405,7 +405,7 @@ function SocialButton({ children, onClick, className, label }: { children: React
       type="button"
       onClick={onClick}
       aria-label={`Sign in with ${label}`}
-      className={clsx("flex items-center justify-center py-2.5 rounded-xl transition-colors cursor-pointer", className)}
+      className={clsx("flex items-center justify-center py-2 xl:py-2.5 rounded-xl transition-colors cursor-pointer", className)}
     >
       {children}
     </button>
