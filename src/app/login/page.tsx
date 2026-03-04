@@ -68,7 +68,7 @@ export default function LoginPage() {
       errs.password = "Password must be more than 4 characters";
     if (Object.keys(errs).length > 0) { setLoginErrors(errs); return; }
     setLoginLoading(true);
-    setTimeout(() => router.push("/dashboard"), 900);
+    setTimeout(() => router.push("/dashboard"), 500);
   }
 
   return (
@@ -99,15 +99,15 @@ export default function LoginPage() {
             in <span className="text-teal">hours</span> not weeks.
           </h1>
 
-          <div className="space-y-3">
-            <p className="text-xl font-medium text-gray-200">What&apos;s included</p>
+          <div className="space-y-3 pb-10 -mt-5">
+            <p className="text-xl font-normal text-gray-200">What&apos;s included</p>
             <ul className="space-y-3">
               {features.map((f, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center shrink-0 mt-0.5">
                     <Check size={11} className="text-teal" strokeWidth={3} />
                   </div>
-                  <span className="text-md font-normal text-gray-300 leading-relaxed">{f}</span>
+                  <span className="text-md font-light text-gray-300 leading-relaxed">{f}</span>
                 </li>
               ))}
             </ul>
@@ -116,11 +116,11 @@ export default function LoginPage() {
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <Star size={14} className="text-green-400 fill-green-400" />
-              <span className="text-sm font-normal text-white">Trustpilot</span>
+              <span className="text-sm font-light text-white">Trustpilot</span>
             </div>
             <p className="text-xl font-normal text-gray-300">
               <span className="font-normal text-white">Rated 4.5/5.0</span>{" "}
-              <span className="text-gray-400">(100k+ reviews)</span>
+              <span className="text-gray-400 text-xs">(100k+ reviews)</span>
             </p>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function LoginPage() {
           </h2>
         </div>
 
-        <div className={clsx("w-full max-w-[420px] lg:w-[520px] lg:max-w-[520px] flex-shrink-0 bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-6 sm:px-8", mode === "login" ? "py-6 sm:py-7" : "py-7 sm:py-9")}>
+        <div className={clsx("w-full max-w-[420px] lg:w-[420px] lg:max-w-[420px] flex-shrink-0 bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-6 sm:px-8", mode === "login" ? "py-6 sm:py-7" : "py-7 sm:py-9")}>
           {mode === "login" ? (
             <>
               <h2 className="text-2xl font-normal tracking-tight text-center text-gray-900 dark:text-white mb-1">Log in</h2>
@@ -286,7 +286,7 @@ export default function LoginPage() {
                       {agreed && <Check size={10} className="text-white" strokeWidth={3} />}
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 leading-snug">
+                  <span className="text-xs text-gray-600 dark:text-gray-400 leading-snug">
                     I agree to Aps&apos;s{" "}
                     <span className="text-blue-500 underline cursor-pointer hover:text-blue-600">Terms &amp; Conditions</span>{" "}
                     and acknowledge the{" "}
@@ -298,7 +298,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 rounded-xl bg-teal hover:bg-teal-hover text-white text-sm font-semibold transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl bg-teal hover:bg-teal-hover text-white text-sm font-normal transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>

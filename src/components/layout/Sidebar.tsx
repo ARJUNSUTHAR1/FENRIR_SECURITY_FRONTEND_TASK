@@ -127,8 +127,8 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
               A
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-xs font-medium text-gray-900 dark:text-white truncate">admin@edu.com</p>
-              <p className="text-[11px] font-normal text-gray-500 dark:text-gray-400">Security Lead</p>
+              <p className="text-xs font-light text-gray-600 dark:text-white truncate">admin@edu.com</p>
+              <p className="text-[11px] font-normal text-gray-900 dark:text-gray-400">Security Lead</p>
             </div>
             <ChevronUp
               size={14}

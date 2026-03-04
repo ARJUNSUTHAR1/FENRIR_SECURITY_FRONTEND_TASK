@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Search,
@@ -28,6 +28,7 @@ import { useToast } from "@/hooks/useToast";
 import { scans, dashboardStats, severityStats } from "@/data/mock";
 import type { ScanStatus, ScanType } from "@/types";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { DashboardSkeleton } from "@/components/ui/Skeleton";
 import clsx from "clsx";
 
 
@@ -51,6 +52,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const { toasts, addToast, dismissToast } = useToast();
 
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<ScanStatus | "all">("all");
   const [typeFilter, setTypeFilter] = useState<ScanType | "all">("all");
@@ -58,6 +60,13 @@ export default function DashboardPage() {
   const [page, setPage] = useState(1);
   const [showNewScanModal, setShowNewScanModal] = useState(false);
   const [newScanName, setNewScanName] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filtered = useMemo(() => {
     return scans.filter((s) => {
@@ -81,6 +90,14 @@ export default function DashboardPage() {
     setShowNewScanModal(false);
     setNewScanName("");
     addToast(`Scan "${newScanName}" has been created successfully.`, "success");
+  }
+
+  if (loading) {
+    return (
+      <AppLayout>
+        <DashboardSkeleton />
+      </AppLayout>
+    );
   }
 
   return (

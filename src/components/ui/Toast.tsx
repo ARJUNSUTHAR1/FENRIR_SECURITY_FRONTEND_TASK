@@ -18,10 +18,10 @@ const iconMap = {
 };
 
 const colorMap = {
-  success: "border-green-500/30 bg-green-500/10 text-green-400",
-  error: "border-red-500/30 bg-red-500/10 text-red-400",
-  info: "border-teal/30 bg-teal/10 text-teal",
-  warning: "border-amber-400/30 bg-amber-400/10 text-amber-400",
+  success: "border-green-500/50 bg-green-500 dark:bg-green-600 text-white",
+  error: "border-red-500/50 bg-red-500 dark:bg-red-600 text-white",
+  info: "border-teal/50 bg-teal dark:bg-teal-hover text-white",
+  warning: "border-amber-400/50 bg-amber-400 dark:bg-amber-500 text-white",
 };
 
 function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () => void }) {
@@ -46,12 +46,12 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
       className={clsx(
         "flex items-start gap-3 px-4 py-3 rounded-xl border shadow-lg text-sm font-medium transition-all duration-300 min-w-[280px] max-w-[360px]",
         colorMap[toast.type],
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+        visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
       )}
     >
       <Icon size={16} className="mt-0.5 shrink-0" />
-      <span className="flex-1 text-gray-800 dark:text-gray-100">{toast.message}</span>
-      <button onClick={onDismiss} className="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
+      <span className="flex-1 text-white">{toast.message}</span>
+      <button onClick={onDismiss} className="shrink-0 opacity-80 hover:opacity-100 transition-opacity text-white">
         <X size={14} />
       </button>
     </div>
@@ -60,7 +60,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
 
 export function ToastContainer({ toasts, onDismiss }: ToastProps) {
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 items-end">
+    <div className="fixed top-10 right-6 z-50 flex flex-col gap-2 items-end">
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} onDismiss={() => onDismiss(toast.id)} />
       ))}

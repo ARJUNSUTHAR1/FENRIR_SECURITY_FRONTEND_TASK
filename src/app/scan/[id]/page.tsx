@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/Button";
 import { ToastContainer } from "@/components/ui/Toast";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useToast } from "@/hooks/useToast";
+import { ScanDetailSkeleton } from "@/components/ui/Skeleton";
 import { scans, activityLogs, verificationLogs, findings } from "@/data/mock";
 import type { ScanStep } from "@/types";
 
@@ -79,11 +80,13 @@ export default function ScanDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const { toasts, addToast, dismissToast } = useToast();
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"activity" | "verification">("activity");
   const [consoleExpanded, setConsoleExpanded] = useState(true);
   const logEndRef = useRef<HTMLDivElement>(null);
   const logContainerRef = useRef<HTMLDivElement>(null);
   const userScrolledUp = useRef(false);
+  const logTimerRef = useRef<NodeJS.Timeout | null>(null);
   const [visibleLogs, setVisibleLogs] = useState(4);
   const [progress, setProgress] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
@@ -92,29 +95,56 @@ export default function ScanDetailPage() {
   const scan = scans.find((s) => s.id === id) ?? scans[0];
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const timer = setTimeout(() => {
+      setVisibleLogs(4);
+      setProgress(0);
+      setIsRunning(true);
+      setCurrentStepIndex(0);
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (loading) return;
+    if (logTimerRef.current) {
+      clearInterval(logTimerRef.current);
+      logTimerRef.current = null;
+    }
+    logTimerRef.current = setInterval(() => {
       setVisibleLogs((v) => {
         const max = activeTab === "activity" ? activityLogs.length : verificationLogs.length;
-        if (v < max) return v + 1;
-        clearInterval(timer);
-        return v;
+        if (v >= max) {
+          if (logTimerRef.current) {
+            clearInterval(logTimerRef.current);
+            logTimerRef.current = null;
+          }
+          return v;
+        }
+        return v + 1;
       });
     }, 1800);
-    return () => clearInterval(timer);
-  }, [activeTab]);
+    return () => {
+      if (logTimerRef.current) {
+        clearInterval(logTimerRef.current);
+        logTimerRef.current = null;
+      }
+    };
+  }, [activeTab, loading]);
 
   useEffect(() => {
     userScrolledUp.current = false;
   }, [activeTab]);
 
   useEffect(() => {
+    if (loading) return;
     const el = logContainerRef.current;
     if (!el || userScrolledUp.current) return;
     el.scrollTop = el.scrollHeight;
-  }, [visibleLogs]);
+  }, [visibleLogs, loading]);
 
   useEffect(() => {
-    if (!isRunning) return;
+    if (loading || !isRunning) return;
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -127,12 +157,13 @@ export default function ScanDetailPage() {
     }, 60);
 
     return () => clearInterval(interval);
-  }, [isRunning]);
+  }, [isRunning, loading]);
 
   useEffect(() => {
+    if (loading) return;
     const idx = Math.min(steps.length - 1, Math.floor((progress / 100) * steps.length));
     setCurrentStepIndex(idx);
-  }, [progress]);
+  }, [progress, loading]);
 
   function handleStopScan() {
     setIsRunning(false);
@@ -143,6 +174,14 @@ export default function ScanDetailPage() {
   const displayedLogs = logs.slice(0, visibleLogs);
 
   const allDone = !isRunning && progress >= 100;
+
+  if (loading) {
+    return (
+      <AppLayout>
+        <ScanDetailSkeleton />
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout>
@@ -201,7 +240,7 @@ export default function ScanDetailPage() {
                     const isAct = i === currentStepIndex && isRunning;
                     const Icon = step.icon;
                     return (
-                      <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                      <div key={i} className="flex flex-col items-center gap-1">
                         <div className={clsx(
                           "w-6 h-6 rounded-full flex items-center justify-center border transition-all",
                           isAct ? "bg-teal border-teal text-white" : done ? "bg-teal/15 border-teal/40 text-teal" : "bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-400 dark:text-gray-600"
@@ -223,17 +262,17 @@ export default function ScanDetailPage() {
                 </div>
               </div>
 
-              <div className="hidden sm:flex items-start gap-0 w-full py-2">
+              <div className="hidden sm:flex items-start justify-between w-full py-2">
                 {steps.map((step, i) => {
                   const isActive = i === currentStepIndex && isRunning;
                   const isCompleted = allDone ? i <= currentStepIndex : i < currentStepIndex;
                   const Icon = step.icon;
                   return (
-                    <div key={step.key} className="flex items-center flex-1 min-w-0">
-                      <div className="flex flex-col items-center gap-1 flex-1 min-w-0">
+                    <div key={step.key} className="flex items-center">
+                      <div className="flex flex-col items-center gap-1">
                         <div
                           className={clsx(
-                            "w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all relative overflow-hidden shrink-0",
+                            "w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all relative overflow-hidden",
                             isActive
                               ? "bg-teal border-teal text-white"
                               : isCompleted
@@ -245,12 +284,12 @@ export default function ScanDetailPage() {
                           {isActive && <span className="absolute inset-0 rounded-full bg-white/20 animate-pulse" />}
                           <Icon size={15} strokeWidth={isActive ? 2.5 : 1.8} className="relative z-10" />
                         </div>
-                        <span className={clsx("text-xs font-medium text-center leading-tight", isActive ? "text-teal" : isCompleted ? "text-gray-600 dark:text-gray-400" : "text-gray-400 dark:text-gray-600")}>
+                        <span className={clsx("text-xs font-medium text-center leading-tight whitespace-nowrap", isActive ? "text-teal" : isCompleted ? "text-gray-600 dark:text-gray-400" : "text-gray-400 dark:text-gray-600")}>
                           {step.label}
                         </span>
                       </div>
                       {i < steps.length - 1 && (
-                        <div className="flex-1 mx-1 relative" style={{ marginBottom: "22px", minWidth: "12px" }}>
+                        <div className="flex-1 mx-1 relative" style={{ marginBottom: "22px", minWidth: "12px", maxWidth: "100px" }}>
                           <div className={clsx("h-0.5 transition-all duration-500", (allDone || i < currentStepIndex) ? "bg-teal/50" : "bg-gray-200 dark:bg-white/10")} />
                           {isActive && i === currentStepIndex - 1 && <div className="absolute inset-0 h-0.5 bg-teal animate-pulse" />}
                         </div>
