@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { Eye, EyeOff, Check, Star } from "lucide-react";
 import { clsx } from "clsx";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -91,29 +92,55 @@ export default function LoginPage() {
         <ThemeToggle />
       </div>
 
-      <div className="hidden lg:flex flex-col justify-center relative z-10">
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden lg:flex flex-col justify-center relative z-10"
+      >
         <div className="space-y-8">
-          <h1 className="text-4xl xl:text-5xl font-normal text-white leading-tight tracking-tight">
+          <motion.h1
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl xl:text-5xl font-normal text-white leading-tight tracking-tight"
+          >
             Expert level Cybersecurity
             <br />
             in <span className="text-teal">hours</span> not weeks.
-          </h1>
+          </motion.h1>
 
-          <div className="space-y-3 pb-10 -mt-5">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-3 pb-10 -mt-5"
+          >
             <p className="text-xl font-normal text-gray-200">What&apos;s included</p>
             <ul className="space-y-3">
               {features.map((f, i) => (
-                <li key={i} className="flex items-start gap-3">
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-start gap-3"
+                >
                   <div className="w-5 h-5 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center shrink-0 mt-0.5">
                     <Check size={11} className="text-teal" strokeWidth={3} />
                   </div>
                   <span className="text-md font-light text-gray-300 leading-relaxed">{f}</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="space-y-1">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-1"
+          >
             <div className="flex items-center gap-2">
               <Star size={14} className="text-green-400 fill-green-400" />
               <span className="text-sm font-light text-white">Trustpilot</span>
@@ -122,18 +149,29 @@ export default function LoginPage() {
               <span className="font-normal text-white">Rated 4.5/5.0</span>{" "}
               <span className="text-gray-400 text-xs">(100k+ reviews)</span>
             </p>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       <div className="w-full lg:w-auto flex flex-col justify-center items-center relative z-10 py-16 lg:py-0">
-        <div className="lg:hidden w-full max-w-[420px] mb-3">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="lg:hidden w-full max-w-[420px] mb-3"
+        >
           <h2 className="text-xl font-normal text-white leading-snug">
             Expert level security in <span className="text-teal">hours</span> not weeks.
           </h2>
-        </div>
+        </motion.div>
 
-        <div className={clsx("w-full max-w-[420px] lg:w-[420px] lg:max-w-[420px] flex-shrink-0 bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-6 sm:px-8", mode === "login" ? "py-6 sm:py-7" : "py-7 sm:py-9")}>
+        <motion.div
+          key={mode}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className={clsx("w-full max-w-[420px] lg:w-[420px] lg:max-w-[420px] flex-shrink-0 bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-2xl px-6 sm:px-8", mode === "login" ? "py-6 sm:py-7" : "py-7 sm:py-9")}
+        >
           {mode === "login" ? (
             <>
               <h2 className="text-2xl font-normal tracking-tight text-center text-gray-900 dark:text-white mb-1">Log in</h2>
@@ -331,7 +369,7 @@ export default function LoginPage() {
               </div>
             </>
           )}
-        </div>
+        </motion.div>
 
         <div className="lg:hidden w-full max-w-[420px] mt-8 pb-10 space-y-6">
           <div>

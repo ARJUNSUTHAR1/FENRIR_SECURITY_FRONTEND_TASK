@@ -262,13 +262,13 @@ export default function ScanDetailPage() {
                 </div>
               </div>
 
-              <div className="hidden sm:flex items-start justify-between w-full py-2">
+              <div className="hidden sm:flex items-start justify-start gap-0 w-full py-2">
                 {steps.map((step, i) => {
                   const isActive = i === currentStepIndex && isRunning;
                   const isCompleted = allDone ? i <= currentStepIndex : i < currentStepIndex;
                   const Icon = step.icon;
                   return (
-                    <div key={step.key} className="flex items-center">
+                    <div key={step.key} className="flex items-center flex-1 min-w-0">
                       <div className="flex flex-col items-center gap-1">
                         <div
                           className={clsx(
@@ -284,12 +284,12 @@ export default function ScanDetailPage() {
                           {isActive && <span className="absolute inset-0 rounded-full bg-white/20 animate-pulse" />}
                           <Icon size={15} strokeWidth={isActive ? 2.5 : 1.8} className="relative z-10" />
                         </div>
-                        <span className={clsx("text-xs font-medium text-center leading-tight whitespace-nowrap", isActive ? "text-teal" : isCompleted ? "text-gray-600 dark:text-gray-400" : "text-gray-400 dark:text-gray-600")}>
+                        <span className={clsx("text-xs font-medium text-center leading-tight", isActive ? "text-teal" : isCompleted ? "text-gray-600 dark:text-gray-400" : "text-gray-400 dark:text-gray-600")}>
                           {step.label}
                         </span>
                       </div>
                       {i < steps.length - 1 && (
-                        <div className="flex-1 mx-1 relative" style={{ marginBottom: "22px", minWidth: "12px", maxWidth: "100px" }}>
+                        <div className="flex-1 relative" style={{ marginBottom: "22px", minWidth: "12px" }}>
                           <div className={clsx("h-0.5 transition-all duration-500", (allDone || i < currentStepIndex) ? "bg-teal/50" : "bg-gray-200 dark:bg-white/10")} />
                           {isActive && i === currentStepIndex - 1 && <div className="absolute inset-0 h-0.5 bg-teal animate-pulse" />}
                         </div>

@@ -119,8 +119,8 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="flex-shrink-0 px-4 sm:px-6 py-2.5 sm:py-3.5 border-b border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616] overflow-x-auto">
-          <div className="flex items-center gap-x-4 sm:gap-x-6 text-xs whitespace-nowrap">
+        <div className="flex-shrink-0 px-8 sm:px-6 py-2.5 sm:py-3.5 border-b border-gray-200 dark:border-white/[0.06] bg-white dark:bg-[#161616] overflow-x-auto">
+          <div className="flex items-center justify-between gap-x-4 sm:gap-x-6 text-xs whitespace-nowrap">
             <StatItem label="Org" value={dashboardStats.org} />
             <Divider />
             <StatItem label="Owner" value={dashboardStats.owner} />
@@ -133,7 +133,7 @@ export default function DashboardPage() {
             <Divider />
             <StatItem label="Failed" value={String(dashboardStats.failedScans)} />
             <div className="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 ml-6">
-              <RefreshCw size={12} />
+              <RefreshCw className="text-teal dark:text-teal-hover" size={12} />
               <span>{dashboardStats.lastUpdated}</span>
             </div>
           </div>
@@ -144,17 +144,17 @@ export default function DashboardPage() {
             const stat = severityStats[level];
             const Icon = severityIcons[level];
             return (
-              <div key={level} className="px-3 sm:px-5 lg:px-6 py-3 sm:py-5">
+              <div key={level} className="group px-3 sm:px-5 lg:px-6 py-3 sm:py-5 cursor-pointer">
                 <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <span className="text-[11px] sm:text-sm font-medium text-gray-500 dark:text-gray-400 capitalize">
+                  <span className="text-[11px] sm:text-sm font-medium text-gray-500 dark:text-gray-400 capitalize group-hover:translate-x-1 transition-transform duration-300">
                     {level} <span className="hidden sm:inline">Severity</span>
                   </span>
-                  <div className={clsx("p-1 rounded-lg bg-gray-100 dark:bg-white/5", severityColors[level])}>
+                  <div className={clsx("p-1 rounded-lg bg-gray-100 dark:bg-white/5 group-hover:-translate-x-1 transition-transform duration-300", severityColors[level])}>
                     <Icon size={13} />
                   </div>
                 </div>
-                <div className="flex items-end gap-2">
-                  <span className="text-xl sm:text-3xl font-normal tracking-tight text-gray-900 dark:text-white leading-none">
+                <div className="flex items-end gap-2 group-hover:translate-x-1 transition-transform duration-300">
+                  <span className="text-xl sm:text-3xl font-semibold tracking-tight text-gray-900 dark:text-white leading-none">
                     {stat.count}
                   </span>
                   <div className={`flex items-center gap-0.5 text-[10px] sm:text-xs font-medium pb-0.5 ${stat.direction === "up" ? "text-red-400" : "text-green-400"}`}>
