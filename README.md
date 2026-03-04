@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+
+User Interface
+- Dark & Light Mode
+- Responsive Design
+- Smooth Animations
+- Modern UI Components
+
+### Pages
+ -login
+ -Dashboard
+ -Scan
+ -demo pages for other tabs
+
+## Tech Stack
+
+- Framework: Next.js 16.1.6 (App Router)
+- Language: TypeScript 5
+- Styling: Tailwind CSS 4
+- Animations: Framer Motion 12.34.5
+- Icons: Lucide React
+- Theme Management: next-themes
+- Font: Outfit 
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ installed
+- npm, yarn, pnpm, or bun package manager
+
+### Installation
+
+1. Clone the repository:
+bash
+git clone <repository-url>
+cd repository-name
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Layout Components
+- AppLayout
+- Sidebar
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### UI Components
+- Button
+- Badge
+- StatusChip
+- ProgressBar
+- Toast
+- Skeleton
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Theme System
+The application supports both dark and light modes with smooth transitions. Theme preference is persisted using `next-themes` and can be toggled from any page.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Responsive Breakpoints
+- Mobile: 365px - 639px
+- Tablet: 640px - 1023px
+- Desktop: 1024px+
+- Max Width: 1600px (centered layout)
+
+### Mock Data
+The application uses mock data located in `src/data/mock.ts` for:
+- Scan listings
+- Activity logs
+- Verification logs
+- Vulnerability findings
+- Dashboard statistics
+
+
+### Styling Approach
+- Tailwind CSS utility classes for styling
+- Custom CSS variables for theme colors in `globals.css`
+- Consistent spacing and typography system
+- Custom gradient backgrounds for login page
+
+### Animation Strategy
+- Framer Motion for page transitions and component animations
+- CSS transitions for hover states and micro-interactions
+
+
+### State Management
+- React hooks (useState, useEffect, useRef) for local state
+- Custom hooks for toast notifications
+
+## Deployment
+
+This application deployed on:
+- Vercel
+
